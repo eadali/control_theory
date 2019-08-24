@@ -16,6 +16,7 @@ from matplotlib import pyplot
 class pendulum_model:
     def __init__(self, b, c, x_0):
         ''' Inits pendulum constants and initial state
+            b:
         '''
 
         self.b = b
