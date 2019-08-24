@@ -11,42 +11,53 @@ from models import pendulum_model
 from matplotlib import pyplot
 from numpy import sin, cos, pi
 
-pid = pid_controller(5,0.001,6)
-pendulum = pendulum_model(0.25, 5, [pi-0.4,0])
-pendulum_2 = pendulum_model(0.25, 5, [pi-0.4,0])
 
+
+# Creates a PID controller
+pid = pid_controller(k_p=6, k_i=0.001, k_d=6)
+#pid = pid_controller(k_p=0, k_i=0, k_d=0)
+
+# Creates a pendulum model
+pendulum = pendulum_model(0.25, 5, [pi-0.8,0])
+
+# Reference value for tracking
 r = pi
-u = 0
-theta = list()
-test = list()
-y_z = list()
 
-for t in range(1000):
-    y_z.append(pendulum_2.update(0))
+
+u = 0
+
+# Inverted pendulum angle
+theta = list()
+
+#
+for t in range(128):
+    # Apply input signal value
     y = pendulum.update(u)
+
+    # Calculate error value
     e = r - y
+
+    # Calculate input signal value
     u = pid.update(e)
-    test.append(u)
 
     theta.append(y)
 
-#pyplot.ion(
-#for y in theta:
-#    pyplot.clf()
-#    x = sin(y)
-#    y = cos(y)
-#    pyplot.plot([0,x],[0,y])
-#    pyplot.show()
-#    pyplot.pause(0.01)
+# Animates inverted pendulum
+pyplot.ion()
+pyplot.figure(figsize=(8, 8))
 
-pyplot.plot(theta, label='with_p')
-pyplot.plot(y_z, label='thet')
-pyplot.ylim([-4,4])
-#
-pyplot.legend(loc='best')
-pyplot.xlabel('t')
-pyplot.grid()
-pyplot.show()
+for y in theta:
+    pyplot.clf()
 
+    x_pos = sin(y)
+    y_pos = -cos(y)
 
+    pyplot.scatter([x_pos], [y_pos], s=256, marker='o', c='r', zorder=10)
+    pyplot.scatter([0], [0], s=64, marker='+', c='r', zorder=10)
+    pyplot.plot([0,x_pos], [0,y_pos])
+    pyplot.xlim([-1.2,1.2])
+    pyplot.ylim([-1.2,1.2])
+    pyplot.grid()
 
+    pyplot.show()
+    pyplot.pause(0.001)

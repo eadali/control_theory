@@ -5,11 +5,23 @@ Created on Sat Aug 24 11:20:00 2019
 
 @author: eadali
 """
+
 from numpy import cos, linspace, pi, cumsum
 from matplotlib import pyplot
 
+
+
+
 class pid_controller:
     def __init__(self, k_p, k_i, k_d):
+        """Inits PID contoller parameters
+
+        # Arguments
+            k_p: Proportional gain
+            k_i: Integral gain
+            k_d: Derivative gain
+        """
+
         self.k_p = k_p
         self.k_i = k_i
         self.k_d = k_d
@@ -20,6 +32,16 @@ class pid_controller:
 
 
     def update(self, e):
+        """Interface function for PID controller
+
+        # Arguments
+            e: error value
+
+        # Returns
+            control signal for model
+        """
+
+        # If first cycle, derivative and integral value equal to 0
         if self.first:
             u = self.k_p*e + self.k_i*0 + self.k_d*0
             self.first = False
@@ -32,21 +54,18 @@ class pid_controller:
         self.i = self.i + e
         self.e_m1 = e
 
-
-        print(self.i)
-
         return u
 
 
 
 if __name__ == '__main__':
+    """Test of pid_controller class
+    """
+
     p_pid = pid_controller(k_p=1, k_i=0, k_d=0)
     i_pid = pid_controller(k_p=0, k_i=1/16, k_d=0)
     d_pid = pid_controller(k_p=0, k_i=0, k_d=8)
     e_signal = cos(linspace(0, 4*pi, 100))
-
-    ss = cumsum(e_signal)
-
 
     p_signal = list()
     i_signal = list()
@@ -64,7 +83,6 @@ if __name__ == '__main__':
     pyplot.plot(p_signal, 'b')
     pyplot.plot(i_signal, 'g')
     pyplot.plot(d_signal, 'r')
-    pyplot.plot(ss)
     pyplot.show()
 
 
