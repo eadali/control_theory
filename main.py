@@ -12,13 +12,16 @@ from matplotlib import pyplot
 from numpy import sin, cos, pi
 
 
+external_force_value = 4
+external_force_timestep = 16
+
 
 # Creates a PID controller
 pid = pid_controller(k_p=6, k_i=0.001, k_d=6)
 #pid = pid_controller(k_p=0, k_i=0, k_d=0)
 
 # Creates a pendulum model
-pendulum = pendulum_model(0.25, 5, [pi-0.8,0])
+pendulum = pendulum_model(0.25, 5, [pi,0])
 
 # Reference value for tracking
 r = pi
@@ -28,6 +31,7 @@ u = 0
 
 # Inverted pendulum angle
 theta = list()
+control_signal = list()
 
 # Control cycle
 for t in range(128):
@@ -39,7 +43,11 @@ for t in range(128):
 
     # Calculate input signal value
     u = pid.update(e)
+    if t == external_force_timestep:
+        print('check')
+        u = u + external_force_value
 
+    control_signal.append(u)
     theta.append(y)
 
 # Animates inverted pendulum
@@ -59,6 +67,6 @@ for time_index, y in enumerate(theta):
     pyplot.ylim([-1.2,1.2])
     pyplot.grid()
     #fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
-    
+
     pyplot.show()
     pyplot.pause(0.001)
