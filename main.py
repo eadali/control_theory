@@ -34,25 +34,25 @@ theta = list()
 control_signal = list()
 
 # Control cycle
-for t in range(128):
+for t in range(256):
     # Apply input signal value
-    y = pendulum.update(u)
+    if t == external_force_timestep:
+        y = pendulum.update(u+external_force_value)
+    else:
+        y = pendulum.update(u)
 
     # Calculate error value
     e = r - y
 
     # Calculate input signal value
     u = pid.update(e)
-    if t == external_force_timestep:
-        print('check')
-        u = u + external_force_value
 
     control_signal.append(u)
     theta.append(y)
 
 # Animates inverted pendulum
 pyplot.ion()
-fig = pyplot.figure(figsize=(8, 8))
+fig = pyplot.figure(figsize=(4, 8))
 
 for time_index, y in enumerate(theta):
     pyplot.clf()
@@ -69,8 +69,11 @@ for time_index, y in enumerate(theta):
     pyplot.grid()
 
     pyplot.subplot(2,1,2)
-
+    pyplot.xlim([0,len(control_signal)])
+    pyplot.ylim([min(control_signal)-0.5, max(control_signal)+0.5])
+    pyplot.plot(control_signal[:time_index])
+    pyplot.grid()
     #fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
 
     pyplot.show()
-    pyplot.pause(0.001)
+    pyplot.pause(0.00001)
