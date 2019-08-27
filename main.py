@@ -29,7 +29,7 @@ u = 0
 # Inverted pendulum angle
 theta = list()
 
-#
+# Control cycle
 for t in range(128):
     # Apply input signal value
     y = pendulum.update(u)
@@ -58,7 +58,7 @@ for time_index, y in enumerate(theta):
     pyplot.xlim([-1.2,1.2])
     pyplot.ylim([-1.2,1.2])
     pyplot.grid()
-    fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
+    #fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
     
     pyplot.show()
     pyplot.pause(0.001)
