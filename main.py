@@ -71,7 +71,9 @@ for time_index, y in enumerate(theta):
     pyplot.subplot(2,1,2)
     pyplot.xlim([0,len(control_signal)])
     pyplot.ylim([min(control_signal)-0.5, max(control_signal)+0.5])
-    pyplot.plot(control_signal[:time_index])
+    pyplot.plot(control_signal[:time_index], label='u(t)')
+    pyplot.legend(loc='best')
+
     pyplot.grid()
     #fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
 
