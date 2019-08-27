@@ -44,9 +44,9 @@ for t in range(128):
 
 # Animates inverted pendulum
 pyplot.ion()
-pyplot.figure(figsize=(8, 8))
+fig = pyplot.figure(figsize=(8, 8))
 
-for y in theta:
+for time_index, y in enumerate(theta):
     pyplot.clf()
 
     x_pos = sin(y)
@@ -58,6 +58,7 @@ for y in theta:
     pyplot.xlim([-1.2,1.2])
     pyplot.ylim([-1.2,1.2])
     pyplot.grid()
-
+    fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
+    
     pyplot.show()
     pyplot.pause(0.001)
