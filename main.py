@@ -60,12 +60,16 @@ for time_index, y in enumerate(theta):
     x_pos = sin(y)
     y_pos = -cos(y)
 
+    pyplot.subplot(2,1,1)
     pyplot.scatter([x_pos], [y_pos], s=256, marker='o', c='r', zorder=10)
     pyplot.scatter([0], [0], s=64, marker='+', c='r', zorder=10)
     pyplot.plot([0,x_pos], [0,y_pos])
     pyplot.xlim([-1.2,1.2])
     pyplot.ylim([-1.2,1.2])
     pyplot.grid()
+
+    pyplot.subplot(2,1,2)
+
     #fig.savefig('_tmp{:05d}.png'.format(time_index), bbox_inches='tight')
 
     pyplot.show()
