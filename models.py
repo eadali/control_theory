@@ -7,24 +7,29 @@ Created on Thu Aug 22 22:36:20 2019
 """
 
 from scipy.integrate import odeint
-import numpy
+from numpy import sin
 from matplotlib import pyplot
 
 
 
 
 class pendulum_model:
-    def __init__(self, b, c, x_0):
+    def __init__(self, m, l, b, g, x_0):
         """Inits pendulum constants and initial state
 
         # Arguments
-            b: Pendulum constant 1
-            c: Pendulum constant 2
-            x_0: Initial state
+            m: Pendulum mass
+            l: Pendulum length
+            b: Pendulum friction coeff
+            g: Earth gravity acceleration
+            x_0: Pendulum initial state
         """
 
+        self.m = m
+        self.l = l
         self.b = b
-        self.c = c
+        self.g = g
+
         self.x_0 = x_0
 
 
@@ -41,9 +46,14 @@ class pendulum_model:
             Derivative of internal states
         """
 
+        # Calculates equation coeffs
+        c_1 = -self.b/(self.m*self.l**2)
+        c_2 = -self.g/self.l
+        c_3 = 1.0/(self.m*self.l**2)
+
         # ODE of pendulum
         theta, omega = x
-        dxdt = [omega, -self.b*omega - self.c*numpy.sin(theta)+u]
+        dxdt = [omega, c_1*omega + c_2*sin(theta) + c_3*u]
 
         return dxdt
 
@@ -68,12 +78,10 @@ class pendulum_model:
 
 
 
-
 if __name__ == '__main__':
     """Test of pendulum_model class
     """
-
-    pendulum = pendulum_model(b=0.25, c=5, x_0=[1,0])
+    pendulum = pendulum_model(1, 1, 0.25, 9.8, [1,0])
     theta = list()
 
     for t in range(512):
