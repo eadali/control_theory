@@ -26,8 +26,13 @@ class pid_controller:
         self.k_i = k_i
         self.k_d = k_d
 
+        # First cycle check
         self.first = True
+
+        # Integral value of PID
         self.i = 0
+
+        # Previous value of error valeu
         self.e_m1 = 0
 
 
@@ -43,18 +48,25 @@ class pid_controller:
 
         # If first cycle, derivative and integral value equal to 0
         if self.first:
+            # Calculates control signal
             u = self.k_p*e + self.k_i*0 + self.k_d*0
             self.first = False
 
         else:
+            # Calculates derivative of error
             de = e - self.e_m1
+
+            # Calculates control signal
             u = self.k_p*e + self.k_i*self.i + self.k_d*de
 
-
+        # Calculates integral valeu of PID
         self.i = self.i + e
+
+        # Saves error value for derivative calculation
         self.e_m1 = e
 
         return u
+
 
 
 
