@@ -116,15 +116,21 @@ for t in range(num_timesteps):
 # =============================================================================
 
 
+
+# PRINT HISTORY TO TERMINAL AND TEXT FILE
+# =============================================================================
 history = dict()
 history['timestep'] = list(range(num_timesteps))
 history['requested_torque'] = req_torque
 history['pendulum_angle'] = theta
 
-history = DataFrame(history)
+history = DataFrame(history).to_string(index=False)
+
+print(history)
 with open('history.csv', 'w') as history_file:
-    history_file.write(history.to_string(index=False))
-print(history.to_string(index=False))
+    history_file.write(history)
+# =============================================================================
+
 
 
 # ANIMATE SIMULATION RESULT
