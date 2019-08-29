@@ -127,7 +127,7 @@ history['pendulum_angle'] = theta
 history = DataFrame(history).to_string(index=False)
 
 print(history)
-with open('history.csv', 'w') as history_file:
+with open('history.txt', 'w') as history_file:
     history_file.write(history)
 # =============================================================================
 
