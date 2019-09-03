@@ -2,8 +2,8 @@
 ## PID Controller for Inverted Pendulum
 
 ***Control theory*** in control systems engineering is a subfield of mathematics that deals with the control of continuously operating dynamical systems in engineered processes and machines. The objective is to develop a control model for controlling such systems using a control action in an optimum manner without delay or overshoot and ensuring control stability. *-from wikipedia.org*  
-*P-K Feedback Control*  
 <br />
+*P-K Feedback Control*  
 ![alt text](./imgs/pk_feedback.png)
 <br />
 <br />
